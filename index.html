@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>CRUD Render - Usuários</title>
+  <title>CRUD Render - Alunos</title>
   <style>
     body { font-family: Arial; max-width: 600px; margin: 40px auto; background: #f7f7f7; padding: 20px; border-radius: 12px; }
     h1 { text-align: center; color: #003366; }
@@ -21,7 +21,7 @@
   </style>
 </head>
 <body>
-  <h1>Cadastro de Usuários</h1>
+  <h1>Cadastro de Alunos</h1>
 
   <label>Nome:</label>
   <input type="text" id="nome">
@@ -41,12 +41,12 @@
 
   <script>
     // 🔗 URL da sua API no Render
-    const API = window.location.origin; // funciona automático, mesmo online
+    const API = window.location.origin;
 
     async function cadastrar() {
       const nome = document.getElementById("nome").value;
       const idade = document.getElementById("idade").value;
-      const res = await fetch(`${API}/usuarios`, {
+      const res = await fetch(`${API}/alunos`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nome, idade })
@@ -56,7 +56,7 @@
     }
 
     async function consultar() {
-      const res = await fetch(`${API}/usuarios`);
+      const res = await fetch(`${API}/alunos`);
       const dados = await res.json();
       let tabela = `<table><tr><th>ID</th><th>Nome</th><th>Idade</th></tr>`;
       dados.forEach(a => {
@@ -70,7 +70,7 @@
       const id = document.getElementById("id").value;
       const nome = document.getElementById("nome").value;
       const idade = document.getElementById("idade").value;
-      const res = await fetch(`${API}/usuarios/${id}`, {
+      const res = await fetch(`${API}/alunos/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nome, idade })
@@ -81,7 +81,7 @@
 
     async function excluir() {
       const id = document.getElementById("id").value;
-      const res = await fetch(`${API}/usuarios/${id}`, { method: "DELETE" });
+      const res = await fetch(`${API}/alunos/${id}`, { method: "DELETE" });
       alert(await res.text());
       consultar();
     }

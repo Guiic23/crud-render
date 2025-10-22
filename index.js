@@ -22,70 +22,70 @@ const pool = new Pool({
 (async () => {
   try {
     await pool.query(`
-      CREATE TABLE IF NOT EXISTS usuarios (
+      CREATE TABLE IF NOT EXISTS alunos (
         id SERIAL PRIMARY KEY,
         nome TEXT NOT NULL,
         idade INT NOT NULL
       );
     `);
-    console.log("✅ Tabela 'usuarios' pronta!");
+    console.log("✅ Tabela 'alunos' pronta!");
   } catch (err) {
     console.error("❌ Erro ao criar tabela:", err);
   }
 })();
 
 // ➕ CREATE
-app.post("/usuarios", async (req, res) => {
+app.post("/alunos", async (req, res) => {
   const { nome, idade } = req.body;
   try {
-    await pool.query("INSERT INTO usuarios (nome, idade) VALUES ($1, $2)", [
+    await pool.query("INSERT INTO alunos (nome, idade) VALUES ($1, $2)", [
       nome,
       idade,
     ]);
-    res.send("✅ Usuário cadastrado com sucesso!");
+    res.send("✅ Aluno cadastrado com sucesso!");
   } catch (err) {
     console.error("Erro ao cadastrar:", err);
-    res.status(500).send("Erro ao cadastrar usuário");
+    res.status(500).send("Erro ao cadastrar aluno");
   }
 });
 
 // 📖 READ
-app.get("/usuarios", async (req, res) => {
+app.get("/alunos", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM usuarios ORDER BY id ASC");
+    const result = await pool.query("SELECT * FROM alunos ORDER BY id ASC");
     res.json(result.rows);
   } catch (err) {
     console.error("Erro ao listar:", err);
-    res.status(500).send("Erro ao listar usuários");
+    res.status(500).send("Erro ao listar alunos");
   }
 });
 
 // ✏️ UPDATE
-app.put("/usuarios/:id", async (req, res) => {
+app.put("/alunos/:id", async (req, res) => {
   const { id } = req.params;
   const { nome, idade } = req.body;
   try {
-    await pool.query("UPDATE usuarios SET nome=$1, idade=$2 WHERE id=$3", [
+    await pool.query("UPDATE alunos SET nome=$1, idade=$2 WHERE id=$3", [
       nome,
       idade,
       id,
     ]);
-    res.send("✏️ Usuário atualizado com sucesso!");
+    res.send("✏️ Aluno atualizado com sucesso!");
   } catch (err) {
     console.error("Erro ao atualizar:", err);
-    res.status(500).send("Erro ao atualizar usuário");
+    res.status(500).send("Erro ao atualizar aluno");
   }
 });
 
 // ❌ DELETE
-app.delete("/usuarios/:id", async (req, res) => {
+app.delete("/alunos/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    await pool.query("DELETE FROM usuarios WHERE id=$1", [id]);
-    res.send("🗑️ Usuário excluído com sucesso!");
+    await pool.query("DELETE FROM alunos WHERE id=$1", [id]);
+    res.send("🗑️ Aluno excluído com sucesso!");
   } catch (err) {
     console.error("Erro ao excluir:", err);
-    res.status(500).send("Erro ao excluir usuário");
+    res.status(500).send("Erro ao excluir aluno");
   }
 });
 
